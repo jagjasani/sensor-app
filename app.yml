@@ -1,0 +1,1 @@
+command: ["uvicorn", "sensor_app_2.backend.app:app", "--workers", "2"]
