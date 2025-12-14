@@ -1,18 +1,27 @@
+import os
 from contextlib import asynccontextmanager
+
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
+
 from .config import conf
-from .router import api
-from .utils import add_not_found_handler
-from .runtime import rt
 from .logger import logger
+from .router import api
+from .runtime import rt
+from .utils import add_not_found_handler
+
+# Skip DB validation when using mock data (set SENSOR_APP_MOCK_DATA=true)
+USE_MOCK_DATA = os.getenv("SENSOR_APP_MOCK_DATA", "true").lower() == "true"
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     logger.info(f"Starting app with configuration:\n{conf.model_dump_json(indent=2)}")
-    rt.validate_db()
-    rt.initialize_models()
+    if USE_MOCK_DATA:
+        logger.info("Running in MOCK DATA mode - skipping database validation")
+    else:
+        rt.validate_db()
+        rt.initialize_models()
     yield
 
 

@@ -13,22 +13,8 @@ resources:
   apps:
     sensor-app-2-app:
       name: "sensor-app-2"
-      description: "sensor-app-2 created with apx"
+      description: "Sensor monitoring app with mock data"
       source_code_path: ./.build
-      resources:
-        - name: "db"
-          database:
-            database_name: "databricks_postgres"
-            instance_name: "sensor-app-2"
-            permission: "CAN_CONNECT_AND_CREATE"
-
-  database_instances:
-    sensor-app-2-db:
-      name: "sensor-app-2"
-      capacity: "CU_1"
-
-
-
 
 targets:
   dev:

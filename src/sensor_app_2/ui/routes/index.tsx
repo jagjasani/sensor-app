@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import Navbar from "@/components/apx/navbar";
-import { BubbleBackground } from "@/components/backgrounds/bubble";
+import { SensorDashboard, SensorChat } from "@/components/sensor";
 
 export const Route = createFileRoute("/")({
   component: () => <Index />,
@@ -8,47 +8,53 @@ export const Route = createFileRoute("/")({
 
 function Index() {
   return (
-    <div className="relative h-screen w-screen overflow-hidden flex flex-col">
+    <div className="relative min-h-screen flex flex-col bg-background">
       {/* Navbar */}
       <Navbar />
 
-      {/* Main content - 2 columns */}
-      <main className="flex-1 grid md:grid-cols-2">
-        {/* Left column - Gradient only */}
-        <BubbleBackground interactive />
+      {/* Main content */}
+      <main className="flex-1 container mx-auto px-4 py-6 lg:py-8">
+        {/* Page Header */}
+        <div className="mb-8">
+          <h1 className="text-3xl md:text-4xl font-bold tracking-tight bg-gradient-to-r from-foreground to-foreground/60 bg-clip-text text-transparent">
+            Sensor Dashboard
+          </h1>
+          <p className="text-muted-foreground mt-2">
+            Real-time monitoring and analysis of your sensor data
+          </p>
+        </div>
 
-        {/* Right column - Content */}
-        <div className="relative flex flex-col items-center justify-center p-8 md:p-12 border-l">
-          <div className="max-w-lg space-y-8 text-center">
-            <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold">
-              Welcome to {__APP_NAME__}
-            </h1>
-          </div>
+        {/* Dashboard - full width */}
+        <SensorDashboard />
 
-          {/* APX Card Button - Bottom Right */}
-          <a
-            href="https://github.com/databricks-solutions/apx"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="absolute bottom-12 right-2 w-38 group"
-          >
-            <div className="flex items-center gap-3 px-4 py-3 rounded-lg border bg-card hover:bg-accent transition-colors">
+        {/* Footer */}
+        <footer className="mt-12 pt-6 border-t">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-muted-foreground">
+            <p>Sensor monitoring powered by Databricks</p>
+            <a
+              href="https://github.com/databricks-solutions/apx"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 hover:text-foreground transition-colors"
+            >
               <img
                 src="https://raw.githubusercontent.com/databricks-solutions/apx/refs/heads/main/assets/logo.svg"
-                className="h-8 w-8"
+                className="h-5 w-5"
                 alt="apx logo"
               />
-              <div className="flex flex-col items-start text-balance">
-                <span className="text-xs font-medium">Built with</span>
-                <span className="text-sm font-semibold">apx</span>
-              </div>
-            </div>
-          </a>
-        </div>
+              <span>Built with apx</span>
+            </a>
+          </div>
+        </footer>
       </main>
 
-      {/* Background */}
-      <div className="absolute inset-0 -z-10 h-full w-full bg-background" />
+      {/* Floating Chat Popup */}
+      <SensorChat />
+
+      {/* Subtle background pattern */}
+      <div className="fixed inset-0 -z-10 h-full w-full bg-background">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.15),rgba(255,255,255,0))]" />
+      </div>
     </div>
   );
 }
